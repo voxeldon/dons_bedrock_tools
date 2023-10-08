@@ -1,0 +1,11 @@
+:root {
+    --background-color: #2C3E50;  /* Dark Blue */
+    --text-color: #ECF0F1;       /* Off White */
+    --input-field-color: #577593; /* Slightly Lighter Blue */
+    --input-text-color: #ECF0F1; /* Off White */
+    --button-color: #6683a0;     /* Red */
+    --button-hover-color: #87aacc; /* Darker Red */
+    --transparent-black: rgba(0, 0, 0, 0.5);
+    --button-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Default shadow for buttons */
+    --button-hover-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1); /* Increased shadow on hover */
+}

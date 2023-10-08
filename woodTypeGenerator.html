@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wood Type Generator</title>
+    <link rel="stylesheet" href="sty/global.css">
+    <link rel="stylesheet" href="sty/wtg_styles.css"> 
+</head>
+<body>
+    <div style="text-align: center; padding-top: 20px;">
+        <div>
+            <img src="assets/title.png" alt="title" style="max-width: 100%; height: auto;">
+        </div>
+        <div>
+            <img src="assets/wtg_subtitle.png" alt="subtitle" style="max-width: 100%; height: auto;">
+        </div>
+    </div>
+    <div class="centered">
+        <div class="input-container"> <!-- New container for input fields and related elements -->
+            <div class="row">
+                <label for="identifier">Identifier ID:</label>
+                <input type="text" id="identifier" name="identifier">
+                <label for="woodType">Wood Type:</label>
+                <input type="text" id="woodType" name="woodType">
+            </div>
+            <div class="row">
+                <label for="texturePack">Upload Texture Pack (optional):</label>
+                <div class="file-input-container">
+                    <input type="file" id="texturePack" name="texturePack" webkitdirectory directory multiple>
+                </div>
+                
+            </div>
+            <div class="row">
+                <button class="generate-btn" onclick="generateTemplate()">Generate</button>
+            </div>
+        </div> 
+        <div id="logSection">
+            <ul id="logs"></ul>
+        </div>
+        
+        <div class="row">
+            <button class="download-btn" onclick="downloadTexturePackTemplate()">Download Texture Pack Template</button>
+
+        </div>
+        <div class="row">
+            <button onclick="window.location.href='index.html'">Home</button>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <script src="src/jsonScemes.js"></script>
+    <script src="src/jsonMap.js"></script>
+    <script src="src/textureMap.js"></script>
+    <script src="src/main.js"></script>
+</body>
+</html>
