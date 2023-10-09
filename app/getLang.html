@@ -21,10 +21,8 @@
             <img src="assets/get_lang_title.png" alt="title" style="max-width: 100%; height: auto;">
         </div>
         <div class="center-container">
-            <a href="index.html" class="home-button">Home</a>
-            <input type="file" id="folderInput" webkitdirectory directory multiple />
-            <button onclick="processJsonFiles(folderInput.files)">Process Folder</button>
-            <textarea id="output" rows="20"></textarea>
+            <input type="file" id="folderInput" webkitdirectory directory multiple onchange="processJsonFiles(this.files)" />
+            <textarea id="output" rows="80"></textarea>
         </div>
     </div>
 

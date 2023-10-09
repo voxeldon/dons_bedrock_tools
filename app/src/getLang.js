@@ -8,7 +8,7 @@ function processJsonFiles(files) {
             const jsonData = JSON.parse(event.target.result);
             const lines = checkJsonFile(jsonData);
             outputText += lines.join('\n') + '\n';
-            document.getElementById('output').value = outputText;
+            document.getElementById('output').value = outputText.trim();
         };
         reader.readAsText(file);
     }

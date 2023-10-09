@@ -1,78 +1,46 @@
-/* getLang_styles.css */
+body, html {
+    margin: 0; /* Reset default margin */
+    padding: 0; /* Reset default padding */
+    height: 100%; /* Set full height */
+}
 
-body {
-    background-color: var(--background-color);
-    color: var(--text-color);
-    font-family: Arial, sans-serif;
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align content to the top */
+    min-height: 100%; /* Minimum height to be full viewport height */
     padding: 20px;
 }
 
-
 .image-container {
-    margin-bottom: 20px; /* Adjust this value for spacing between the image and the next container */
-}
-
-input[type="file"],
-textarea {
-    background-color: var(--input-field-color);
-    color: var(--input-text-color);
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    outline: none;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-button {
-    background-color: var(--button-color);
-    color: var(--text-color);
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    box-shadow: var(--button-shadow);
-}
-
-button:hover {
-    background-color: var(--button-hover-color);
-    box-shadow: var(--button-hover-shadow);
-}
-
-textarea {
-    margin-top: 20px;
-    resize: vertical;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .center-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 40px; /* Adjust this value to your liking */
+    width: 45%; /* Make the container take up the full width */
     gap: 20px;
 }
 
-/* If you want the textarea to be more responsive, you can remove the cols attribute and set a max-width here */
 textarea {
-    max-width: 80%;
+    width: 90%; /* Set the textarea width to 90% of its container */
+    height: 400px;
+    margin-top: 20px;
+    resize: both; 
+    background-color: var(--transparent-black);
 }
-
-.home-button {
-    display: inline-block;
-    background-color: var(--button-color);
-    color: var(--text-color);
+input[type="file"] {
+    background-color: var(--input-field-color);
+    color: var(--input-text-color);
     border: none;
-    padding: 10px 20px;
+    padding: 10px;
     border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s, box-shadow 0.3s;
-    box-shadow: var(--button-shadow);
-    text-decoration: none;
-    margin-bottom: 20px; /* Spacing between the Home button and the next element */
-}
-
-.home-button:hover {
-    background-color: var(--button-hover-color);
-    box-shadow: var(--button-hover-shadow);
+    outline: none;
+    width: auto; /* Adjust this to prevent full width */
+    display: inline-block; /* Make it inline so it doesn't take the full width */
+    margin-right: 10px; /* Add some margin if needed */
 }

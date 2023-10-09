@@ -157,30 +157,3 @@ input[type="file"]::-webkit-file-upload-button:hover {
     background-color: var(--transparent-black);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
-
-
-/* For Webkit browsers like Chrome, Safari */
-#logSection::-webkit-scrollbar {
-    width: 10px;
-}
-
-#logSection::-webkit-scrollbar-track {
-    background-color: var(--background-color);
-    border-radius: 5px;
-}
-
-#logSection::-webkit-scrollbar-thumb {
-    background-color: var(--button-color);
-    border-radius: 5px;
-}
-
-#logSection::-webkit-scrollbar-thumb:hover {
-    background-color: var(--button-hover-color);
-}
-
-/* For Firefox */
-#logSection {
-    scrollbar-width: thin;
-    scrollbar-color: var(--button-color) var(--background-color);
-}
-
