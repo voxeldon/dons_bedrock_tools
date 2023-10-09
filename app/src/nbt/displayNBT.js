@@ -1,60 +1,78 @@
-function interpretNBTData(data) {
-    let map = {};
-
-    // Extract format_version
-    map.format_version = data.value.format_version.value;
-
-    // Extract size
-    map.size = data.value.size.value.value;
-
-    // Extract block_palette
-    map.block_palette = data.value.structure.value.palette.value.default.value.block_palette.value.value.map(block => block.name.value);
-
-    // Extract structure_world_origin
-    map.structure_world_origin = data.value.structure_world_origin.value.value;
-
-    return map;
-}
-
 let rawNBTData = null;  // Global variable to store the raw data
+let parsedNBTData = null;  // Global variable to store the parsed NBT data
+let originalBlockKeys = [];  // Store the original block keys
 
 function getNBT() {
     const fileInput = document.getElementById('nbtFileInput');
     const file = fileInput.files[0];
-
     if (!file) {
         alert('Please select an NBT file first.');
         return;
     }
-
-    console.log("File Name:", file.name);
-    console.log("File Size:", file.size, "bytes");
-    console.log("File Type:", file.type);
-
     const reader = new FileReader();
     reader.onload = function(event) {
-        rawNBTData = event.target.result;  // Store the raw data
-
-        // Debug: Log the first few bytes of the file for comparison
-        const byteArray = new Uint8Array(rawNBTData);
-        const firstBytes = Array.from(byteArray.slice(0, 10)).map(byte => byte.toString(16).padStart(2, '0')).join(' ');
-        console.log("First 10 bytes (hex):", firstBytes);
-
+        rawNBTData = event.target.result;
         nbt.parse(rawNBTData, function(error, data) {
             if (error) {
                 console.error("Failed to parse NBT data:", error);
                 return;
             }
-            
-            // Directly display the raw NBT data
-            const outputElement = document.getElementById('nbtOutput');
-            outputElement.textContent = JSON.stringify(data, null, 2);
+            parsedNBTData = data;  // Store the parsed data
+
+            const table = document.getElementById('nbtDataTable');
+            table.innerHTML = '';  // Clear previous rows
+
+            // Add rows for the size values
+            const sizeLabels = ['Size X:', 'Size Y:', 'Size Z:'];
+            const sizeValues = data.value.size.value.value;
+            sizeLabels.forEach((label, index) => {
+                const row = table.insertRow();
+                row.insertCell().textContent = label;
+                const inputCell = row.insertCell();
+                const input = document.createElement('input');
+                input.type = 'number';
+                input.value = sizeValues[index];
+                input.id = 'size' + ['X', 'Y', 'Z'][index];
+                inputCell.appendChild(input);
+            });
+
+            // Extract block keys and display them in input fields
+            originalBlockKeys = data.value.structure.value.palette.value.default.value.block_palette.value.value.map(block => block.name.value);
+            originalBlockKeys.forEach((key, index) => {
+                const row = table.insertRow();
+                row.insertCell().textContent = 'Block:';
+                const inputCell = row.insertCell();
+                const input = document.createElement('input');
+                input.value = key;
+                input.id = 'blockKey' + index;
+                inputCell.appendChild(input);
+            });
         });
     };
-    reader.onerror = function(event) {
-        console.error("File Reading Error:", event);
-    };
     reader.readAsArrayBuffer(file);
+}
+
+function downloadMCStructure() {
+    if (!parsedNBTData) {
+        alert('Please load an NBT file first.');
+        return;
+    }
+    // Modify the parsed data with edited keys
+    originalBlockKeys.forEach((originalKey, index) => {
+        const editedKey = document.getElementById('blockKey' + index).value;
+        parsedNBTData.value.structure.value.palette.value.default.value.block_palette.value.value[index].name.value = editedKey;
+    });
+
+    // Modify the parsed data with edited size values
+    parsedNBTData.value.size.value.value = [
+        parseInt(document.getElementById('sizeX').value),
+        parseInt(document.getElementById('sizeY').value),
+        parseInt(document.getElementById('sizeZ').value)
+    ];
+
+    // Re-encode the modified NBT data
+    const modifiedNBTData = nbt.writeUncompressed(parsedNBTData);
+    downloadAsFile('output.mcstructure', modifiedNBTData, 'application/octet-stream');
 }
 
 function downloadAsFile(filename, content, type) {
@@ -65,14 +83,6 @@ function downloadAsFile(filename, content, type) {
     a.download = filename;
     a.click();
     URL.revokeObjectURL(url);
-}
-
-function downloadMCStructure() {
-    if (!rawNBTData) {
-        alert('Please load an NBT file first.');
-        return;
-    }
-    downloadAsFile('output.mcstructure', rawNBTData, 'application/octet-stream');
 }
 
 function downloadTXT() {
