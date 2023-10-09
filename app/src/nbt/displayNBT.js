@@ -27,9 +27,19 @@ function getNBT() {
         return;
     }
 
+    console.log("File Name:", file.name);
+    console.log("File Size:", file.size, "bytes");
+    console.log("File Type:", file.type);
+
     const reader = new FileReader();
     reader.onload = function(event) {
         rawNBTData = event.target.result;  // Store the raw data
+
+        // Debug: Log the first few bytes of the file for comparison
+        const byteArray = new Uint8Array(rawNBTData);
+        const firstBytes = Array.from(byteArray.slice(0, 10)).map(byte => byte.toString(16).padStart(2, '0')).join(' ');
+        console.log("First 10 bytes (hex):", firstBytes);
+
         nbt.parse(rawNBTData, function(error, data) {
             if (error) {
                 console.error("Failed to parse NBT data:", error);
@@ -40,6 +50,9 @@ function getNBT() {
             const outputElement = document.getElementById('nbtOutput');
             outputElement.textContent = JSON.stringify(data, null, 2);
         });
+    };
+    reader.onerror = function(event) {
+        console.error("File Reading Error:", event);
     };
     reader.readAsArrayBuffer(file);
 }
