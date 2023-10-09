@@ -202,10 +202,10 @@
 
 		function write(dataType, size, value) {
 			accommodate(size);
-			dataView['set' + dataType](self.offset, value);
+			dataView['set' + dataType](self.offset, value, true); // <-- added `true` for little-endian
 			self.offset += size;
 			return self;
-		}
+		}		
 
 		/**
 		 * Returns the writen data as a slice from the internal buffer,

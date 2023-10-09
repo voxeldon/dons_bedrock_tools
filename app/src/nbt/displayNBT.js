@@ -16,6 +16,8 @@ function interpretNBTData(data) {
     return map;
 }
 
+let rawNBTData = null;  // Global variable to store the raw data
+
 function getNBT() {
     const fileInput = document.getElementById('nbtFileInput');
     const file = fileInput.files[0];
@@ -27,20 +29,40 @@ function getNBT() {
 
     const reader = new FileReader();
     reader.onload = function(event) {
-        const arrayBuffer = event.target.result;
-        nbt.parse(arrayBuffer, function(error, data) {
+        rawNBTData = event.target.result;  // Store the raw data
+        nbt.parse(rawNBTData, function(error, data) {
             if (error) {
                 console.error("Failed to parse NBT data:", error);
                 return;
             }
             
-            // Interpret the NBT data
-            const map = interpretNBTData(data);
-
-            // Display the interpreted map (or use it in other functions)
+            // Directly display the raw NBT data
             const outputElement = document.getElementById('nbtOutput');
-            outputElement.textContent = JSON.stringify(map, null, 2);
+            outputElement.textContent = JSON.stringify(data, null, 2);
         });
     };
     reader.readAsArrayBuffer(file);
-} 
+}
+
+function downloadAsFile(filename, content, type) {
+    const blob = new Blob([content], { type: type });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+}
+
+function downloadMCStructure() {
+    if (!rawNBTData) {
+        alert('Please load an NBT file first.');
+        return;
+    }
+    downloadAsFile('output.mcstructure', rawNBTData, 'application/octet-stream');
+}
+
+function downloadTXT() {
+    const outputElement = document.getElementById('nbtOutput');
+    downloadAsFile('output.txt', rawNBTData, 'text/plain');
+}
