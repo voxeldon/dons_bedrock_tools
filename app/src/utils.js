@@ -22,6 +22,22 @@ function generateUUID() {
     });
 }
 
+function capitalize(str) {
+    if (!str || typeof str !== 'string') return '';
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+
 function cleanString(str) {
     return str.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+}
+
+function jsoncParse(text) {
+    // Remove single line comments
+    text = text.replace(/\/\/.*$/gm, '');
+    // Remove multi-line comments
+    text = text.replace(/\/\*[\s\S]*?\*\//g, '');
+    // Replace functions starting with a capital letter (basic approach)
+    text = text.replace(/\b[A-Z][a-zA-Z0-9_]*\([^)]*\)/g, '0');
+    return JSON.parse(text);
 }
