@@ -1,5 +1,6 @@
 :root {
     --background-color: #2C3E50;  /* Dark Blue */
+    --nav-background-color: hsl(210, 20%, 15%); /* 50% darker than --background-color */
     --text-color: #ECF0F1;       /* Off White */
     --input-field-color: #577593; /* Slightly Lighter Blue */
     --input-text-color: #ECF0F1; /* Off White */
@@ -8,4 +9,39 @@
     --transparent-black: rgba(0, 0, 0, 0.5);
     --button-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Default shadow for buttons */
     --button-hover-shadow: 0px 6px 8px rgba(0, 0, 0, 0.1); /* Increased shadow on hover */
+}
+
+nav {
+    background-color: var(--nav-background-color);
+    overflow: hidden;
+    box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2); /* Add shadow for depth */
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex; /* Use flexbox for better alignment */
+    justify-content: center; /* Center the items */
+}
+
+nav li {
+    margin: 0 10px; /* Add some spacing between items */
+}
+
+nav li a {
+    display: block;
+    color: var(--text-color);
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    border-radius: 5px; /* Rounded corners */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+    font-weight: bold; /* Bold text */
+}
+
+nav li a:hover {
+    background-color: var(--button-hover-color);
+    color: var(--background-color);
+    box-shadow: var(--button-hover-shadow); /* Shadow on hover */
 }
