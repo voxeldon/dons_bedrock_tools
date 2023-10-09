@@ -3426,6 +3426,7 @@ const boatItemTemplate = `
 			"category": "items"
 		},
 		"components": {
+			"minecraft:display_name": {"value": "item.(identifier):(wood_type)_boat.name"},
 			"minecraft:icon": {
 				"texture": "(wood_type)_boat"
 			},
@@ -3453,6 +3454,7 @@ const chestBoatItemTemplate = `
 			"category": "items"
 		},
 		"components": {
+			"minecraft:display_name": {"value": "item.(identifier):(wood_type)_chest_boat.name"},
 			"minecraft:icon": {
 				"texture": "(wood_type)_chest_boat"
 			},
@@ -3480,6 +3482,7 @@ const doorItemTemplate = `
 			"category": "construction"
 		},
 		"components": {
+			"minecraft:display_name": {"value": "item.(identifier):(wood_type)_door.name"},
 			"minecraft:icon": {
 				"texture": "(wood_type)_door"
 			},
@@ -15161,27 +15164,27 @@ pack.description=Made with Don's Wood Type Generator.
 `
 window.serverLangTemplate = serverLangTemplate;
 
-const clientLangTemplate = `pack.name=(identifier)'s (wood_type) pack
+const clientLangTemplate = `pack.name=(identifier.clean)'s (wood_type.clean) pack
 pack.description=Made with Don's Wood Type Generator.
-tile.(identifier):(wood_type)_door.name=(wood_type) Door
-tile.(identifier):(wood_type)_fence.name=(wood_type) Fence
-tile.(identifier):(wood_type)_fence_gate.name=(wood_type) Fence Gate
-tile.(identifier):(wood_type)_leaves.name=(wood_type) Leaves
-tile.(identifier):(wood_type)_log.name=(wood_type) Log
-tile.(identifier):stripped_(wood_type)_log.name=Stripped (wood_type) Log
-tile.(identifier):(wood_type)_planks.name=Planks (wood_type)
-tile.(identifier):(wood_type)_sapling_block.name=(wood_type) Sapling Block
-tile.(identifier):(wood_type)_slab.name=(wood_type) Slab
-tile.(identifier):(wood_type)_stairs.name=(wood_type) Stairs
-tile.(identifier):stripped_(wood_type)_wood.name=Stripped (wood_type) Wood
-tile.(identifier):(wood_type)_trapdoor.name=(wood_type) Trapdoor
-tile.(identifier):(wood_type)_wood.name=(wood_type) Wood
-entity.(identifier):(wood_type)_boat.name=(wood_type) Boat
-entity.(identifier):(wood_type)_chest_boat.name=(wood_type) Chest Boat
-item.(identifier):(wood_type)_boat.name=(wood_type) Boat
-item.(identifier):(wood_type)_chest_boat.name=(wood_type) Chest Boat
-item.(identifier):(wood_type)_door.name=(wood_type) Door
-item.(identifier):(wood_type)_sapling.name=(wood_type) Sapling
+tile.(identifier):(wood_type)_door.name=(wood_type.clean) Door
+tile.(identifier):(wood_type)_fence.name=(wood_type.clean) Fence
+tile.(identifier):(wood_type)_fence_gate.name=(wood_type.clean) Fence Gate
+tile.(identifier):(wood_type)_leaves.name=(wood_type.clean) Leaves
+tile.(identifier):(wood_type)_log.name=(wood_type.clean) Log
+tile.(identifier):stripped_(wood_type)_log.name=Stripped (wood_type.clean) Log
+tile.(identifier):(wood_type)_planks.name=Planks (wood_type.clean)
+tile.(identifier):(wood_type)_sapling_block.name=(wood_type.clean) Sapling Block
+tile.(identifier):(wood_type)_slab.name=(wood_type.clean) Slab
+tile.(identifier):(wood_type)_stairs.name=(wood_type.clean) Stairs
+tile.(identifier):stripped_(wood_type)_wood.name=Stripped (wood_type.clean) Wood
+tile.(identifier):(wood_type)_trapdoor.name=(wood_type.clean) Trapdoor
+tile.(identifier):(wood_type)_wood.name=(wood_type.clean) Wood
+entity.(identifier):(wood_type)_boat.name=(wood_type.clean) Boat
+entity.(identifier):(wood_type)_chest_boat.name=(wood_type.clean) Chest Boat
+item.(identifier):(wood_type)_boat.name=(wood_type.clean) Boat
+item.(identifier):(wood_type)_chest_boat.name=(wood_type.clean) Chest Boat
+item.(identifier):(wood_type)_door.name=(wood_type.clean) Door
+item.(identifier):(wood_type)_sapling.name=(wood_type.clean) Sapling
 `
 window.clientLangTemplate = clientLangTemplate;
 

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="sty/global.css">
+    <link rel="stylesheet" href="sty/nbtv_styles.css">
+    <title>NBT Viewer</title>
+</head>
+<body>
+    <div>
+        <img src="assets/wtg_title.png" alt="title" style="max-width: 100%; height: auto;">
+    </div>
+    <div class="center-container">
+        <a href="index.html" class="home-button">Home</a>
+        <input type="file" id="nbtFileInput">
+        <button onclick="getNBT()">Display NBT</button>
+        <textarea id="nbtOutput" rows="20" cols="50"></textarea>
+    </div>
+
+    <script src="src/nbt/nbt.js"></script>
+    <script src="src/nbt/displayNBT.js"></script>
+</body>
+</html>

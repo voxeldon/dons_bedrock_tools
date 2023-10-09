@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="sty/global.css">
+    <link rel="stylesheet" href="sty/getlang_styles.css">
+    <title>JSON Folder Processor</title>
+</head>
+<body>
+    <div class="main-container">
+        <div class="image-container">
+            <img src="assets/wtg_title.png" alt="title" style="max-width: 100%; height: auto;">
+        </div>
+        <div class="center-container">
+            <a href="index.html" class="home-button">Home</a>
+            <input type="file" id="folderInput" webkitdirectory directory multiple />
+            <button onclick="processJsonFiles(folderInput.files)">Process Folder</button>
+            <textarea id="output" rows="20"></textarea>
+        </div>
+    </div>
+
+    <script src="src/getLang.js"></script>
+</body>
+</html>

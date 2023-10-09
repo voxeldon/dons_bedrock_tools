@@ -1,7 +1,6 @@
-document.getElementById('texturePack').addEventListener('change', function(e) {
+document.getElementById('texturePack').addEventListener('change', async function(e) {
     const files = e.target.files;
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
+    for (const file of files) {
         const reader = new FileReader();
         reader.onload = function(event) {
             uploadedTextures[file.name] = new Blob([event.target.result]);
@@ -11,106 +10,55 @@ document.getElementById('texturePack').addEventListener('change', function(e) {
 });
 
 const blockPrefix = [
-    'blocks.json','item_texture.json','terrain_texture.json',
-    'custom_boat.animation_controller.json','custom_boat.animation.json', 
-    `manifest.json`, `en_US.lang`, `languages.json`
+    'blocks.json','item_texture.json','terrain_texture.json','custom_boat.animation_controller.json',
+    'custom_boat.animation.json', `manifest.json`, `en_US.lang`, `languages.json`
 ];
-const textureFiles = [
-    'boat_entity.png',
-    'boat_item.png',
-    'chest_boat_entity.png',
-    'chest_boat_item.png',
-    'door_item.png',
-    'door_lower.png',
-    'door_upper.png',
-    'leaves.png',
-    'leaves_opaque.png',
-    'log.png',
-    'log_top.png',
-    'planks.png',
-    'sapling.png',
-    'stripped_log.png',
-    'stripped_log_top.png',
-    'trapdoor.png'
-
-];
+const bpDirs = ['blocks', 'entities', 'feature_rules', 'features', 'items', 'loot_tables', 'recipes', 'structures', 'texts'];
+const rpDirs = ['animations', 'entity', 'models', 'render_controllers', 'texts', 'textures'];
 
 let uploadedTextures = {};
 
-function isValidNamespace(namespace) {
-    return /^[a-z_]+$/.test(namespace);
-}
-
 function getInvalidTextureFiles(uploadedFiles) {
+    const validTextureFiles = textureMap.map(texture => texture.sourceId + '.png');
     const invalidFiles = [];
     for (let i = 0; i < uploadedFiles.length; i++) {
-        if (!textureFiles.includes(uploadedFiles[i].name)) {
+        if (!validTextureFiles.includes(uploadedFiles[i].name)) {
             invalidFiles.push(uploadedFiles[i].name);
         }
     }
     return invalidFiles;
 }
 
-
-
-function log(message) {
-    console.log(message);
-
-    // Append the log to the webpage
-    const logsList = document.getElementById('logs');
-    const logItem = document.createElement('li');
-    logItem.textContent = message;
-    logsList.appendChild(logItem);
-}
-
-
 async function downloadTexturePackTemplate() {
     const zip = new JSZip();
 
-    // Process each file in the textureFiles array
-    const texturePromises = textureFiles.map(filename => {
-        return fetch(`./textures/${filename}`)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`Failed to fetch ${filename}`);
-                }
-                return response.blob();
-            })
-            .then(blob => {
-                log(`Adding texture to zip: ${filename}`);
-                zip.file(`textures/${filename}`, blob);
-            })
-            .catch(error => {
-                console.error(`Error while adding texture ${filename} to zip:`, error);
-                log(`Error while adding texture ${filename} to zip:`, error);
-            });
-    });
+    try {
+        // Process each texture in the textureMap
+        await Promise.all(textureMap.map(async texture => {
+            const filename = texture.sourceId + '.png';
+            const response = await fetch(`./assets/textures/wtg/${filename}`);
 
-    // Wait for all the texture promises to resolve
-    await Promise.all(texturePromises);
+            if (!response.ok) {
+                throw new Error(`Failed to fetch ${filename}`);
+            }
 
-    zip.generateAsync({ type: "blob" })
-        .then(function(blob) {
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `texture_pack_template.zip`;
-            document.body.appendChild(a);
-            a.click();
-            a.remove();
-        })
-        .catch(function(error) {
-            console.error("Error while generating zip:", error);
-        });
-}
+            const blob = await response.blob();
+            log(`Adding texture to zip: ${filename}`);
+            zip.file(`wtg/${filename}`, blob);  // <-- Adjusted this line
+        }));
 
-
-function generateUUID() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random() * 16 | 0,
-            v = c === 'x' ? r : (r & 0x3 | 0x8);
-        return v.toString(16);
-    });
+        const blob = await zip.generateAsync({ type: "blob" });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `texture_pack_template.zip`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+    } catch (error) {
+        console.error("Error:", error);
+        log(`Error: ${error.message}`);
+    }
 }
 
 async function fetchTexture(sourceId) {
@@ -120,7 +68,7 @@ async function fetchTexture(sourceId) {
     if (uploadedTextures[`${sourceId}.png`]) {
         return uploadedTextures[`${sourceId}.png`];
     } else {
-        const response = await fetch(`./textures/${sourceId}.png`);
+        const response = await fetch(`./assets/textures/wtg/${sourceId}.png`);
         if (!response.ok) {
             throw new Error(`Failed to fetch ${sourceId}.png`);
         }
@@ -155,6 +103,7 @@ async function generateTemplate() {
         log('Error: The following uploaded texture file names do not match the required format:');
         invalidFiles.forEach(filename => log(filename));
         log('Required format:');
+        textureMap.forEach(texture => log(`- ${texture.sourceId}.png`));
         for (let i of textureFiles) {
             log(`- ${i}`)
         }
@@ -164,35 +113,39 @@ async function generateTemplate() {
     const zip = new JSZip();
 
     // Create the bp subdirectories
-    const bpDirs = ['blocks', 'entities', 'feature_rules', 'features', 'items', 'loot_tables', 'recipes', 'structures', 'texts'];
     bpDirs.forEach(dir => {
         zip.folder(`bp/${dir}`);
     });
 
     // Create the rp subdirectories
-    const rpDirs = ['animations', 'entity', 'models', 'render_controllers', 'texts', 'textures'];
     rpDirs.forEach(dir => {
         zip.folder(`rp/${dir}`);
     });
 
     // Process each file in the map
+    const cleanIdentifier = cleanString(identifier);
+    const cleanWoodType = cleanString(woodType);
+
     jsonMap.forEach(file => {
         try {
-            const replacedJson = file.jsonScheme
+            let replacedJson = file.jsonScheme
+                .replace(/\(identifier.clean\)/g, cleanIdentifier)
+                .replace(/\(wood_type.clean\)/g, cleanWoodType)
                 .replace(/\(identifier\)/g, identifier)
                 .replace(/\(wood_type\)/g, woodType)
                 .replace(/\(uuid0\)/g, uuid0)
                 .replace(/\(uuid1\)/g, uuid1)
                 .replace(/\(uuid2\)/g, uuid2)
                 .replace(/\(uuid3\)/g, uuid3);
+
             let filename;
-            if (blockPrefix.includes(file.baseName) || file.baseName.includes('geo')){
+            if (blockPrefix.includes(file.baseName) || file.baseName.includes('geo')) {
                 filename = file.baseName;
             } else {
-                filename = `${woodType}${file.baseName}`
+                filename = `${woodType}${file.baseName}`;
             }
+
             log(`Adding ${filename}.json`);
-            
             zip.file(`${file.path}/${filename}`, replacedJson);
         } catch (error) {
             console.error(`Error while processing file ${filename}:`, error);
@@ -213,7 +166,6 @@ async function generateTemplate() {
             });
     });
     
-
     // Wait for all the texture promises to resolve
     await Promise.all(texturePromises);
 
