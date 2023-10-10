@@ -11,7 +11,7 @@ document.getElementById('texturePack').addEventListener('change', async function
 
 const blockPrefix = [
     'blocks.json','item_texture.json','terrain_texture.json','custom_boat.animation_controller.json',
-    'custom_boat.animation.json', `manifest.json`, `en_US.lang`, `languages.json`
+    'custom_boat.animation.json', `manifest.json`, `en_US.lang`, `languages.json`, `pack_icon.png`
 ];
 const bpDirs = ['blocks', 'entities', 'feature_rules', 'features', 'items', 'loot_tables', 'recipes', 'structures', 'texts'];
 const rpDirs = ['animations', 'entity', 'models', 'render_controllers', 'texts', 'textures'];
@@ -44,7 +44,7 @@ async function downloadTexturePackTemplate() {
 
             const blob = await response.blob();
             log(`Adding texture to zip: ${filename}`);
-            zip.file(`wtg/${filename}`, blob);  // <-- Adjusted this line
+            zip.file(`wtg/${filename}`, blob);  
         }));
 
         const blob = await zip.generateAsync({ type: "blob" });
@@ -145,7 +145,7 @@ async function generateTemplate() {
                 filename = `${woodType}${file.baseName}`;
             }
 
-            log(`Adding ${filename}.json`);
+            log(`Adding ${filename}`);
             zip.file(`${file.path}/${filename}`, replacedJson);
         } catch (error) {
             console.error(`Error while processing file ${filename}:`, error);
@@ -156,7 +156,12 @@ async function generateTemplate() {
     const texturePromises = textureMap.map(texture => {
         return fetchTexture(texture.sourceId)
             .then(blob => {
-                const filename = `${woodType}${texture.baseName}`;
+                let filename;
+                if (blockPrefix.includes(texture.baseName)) {
+                    filename = texture.baseName
+                } else {
+                    filename = `${woodType}${texture.baseName}`
+                }
                 log(`Adding texture to zip: ${filename}`);
                 zip.file(`${texture.path}/${filename}`, blob);
             })
@@ -169,12 +174,29 @@ async function generateTemplate() {
     // Wait for all the texture promises to resolve
     await Promise.all(texturePromises);
 
+     // Load and modify structure files
+    try {
+        const blockReplacements = {
+            "minecraft:leaves": `${identifier}:${woodType}_leaves`,
+            "minecraft:oak": `${identifier}:${woodType}_log`,
+            "minecraft:wood": `${identifier}:${woodType}_wood`
+        };
+        const structuresToGenerate = ['tree00', 'tree01', 'tree02']
+        for (let structure of structuresToGenerate) {
+            const modifiedTreeData = await loadAndModifyStructure(structure, blockReplacements);
+            const treeFilename = `${woodType}_${structure}.mcstructure`;
+            log(`Adding structure to zip: ${treeFilename}`);
+            zip.file(`bp/structures/${treeFilename}`, modifiedTreeData);
+        }
+    } catch (e) { log(`Error while adding ${treeFilename} to zip:`, e); }
+
+    //Generate final zip
     zip.generateAsync({ type: "blob" })
         .then(function(blob) {
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `${identifier}_${woodType}_template.zip`;
+            a.download = `${identifier}_${woodType}_template.mcaddon`;
             document.body.appendChild(a);
             a.click();
             a.remove();

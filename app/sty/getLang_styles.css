@@ -13,11 +13,6 @@ body, html {
     padding: 20px;
 }
 
-.image-container {
-    margin-bottom: 20px;
-    text-align: center;
-}
-
 .center-container {
     display: flex;
     flex-direction: column;
@@ -32,15 +27,4 @@ textarea {
     margin-top: 20px;
     resize: both; 
     background-color: var(--transparent-black);
-}
-input[type="file"] {
-    background-color: var(--input-field-color);
-    color: var(--input-text-color);
-    border: none;
-    padding: 10px;
-    border-radius: 5px;
-    outline: none;
-    width: auto; /* Adjust this to prevent full width */
-    display: inline-block; /* Make it inline so it doesn't take the full width */
-    margin-right: 10px; /* Add some margin if needed */
 }

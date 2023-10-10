@@ -89,3 +89,37 @@ function downloadTXT() {
     const outputElement = document.getElementById('nbtOutput');
     downloadAsFile('output.txt', rawNBTData, 'text/plain');
 }
+
+async function loadAndModifyStructure(filename, blockReplacements) {
+    let modifiedNBTData = null;
+
+    try {
+        const response = await fetch(`./assets/nbt/${filename}.mcstructure`);
+        if (!response.ok) {
+            throw new Error(`Failed to fetch ${filename}.mcstructure`);
+        }
+        const rawStructureData = await response.arrayBuffer();
+
+        nbt.parse(rawStructureData, function(error, data) {
+            if (error) {
+                console.error("Failed to parse NBT data:", error);
+                return;
+            }
+
+            // Modify block keys based on the blockReplacements mapping
+            data.value.structure.value.palette.value.default.value.block_palette.value.value.forEach(block => {
+                const replacement = blockReplacements[block.name.value];
+                if (replacement) {
+                    block.name.value = replacement;
+                }
+            });
+
+            modifiedNBTData = nbt.writeUncompressed(data);
+        });
+
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
+    return modifiedNBTData;
+}

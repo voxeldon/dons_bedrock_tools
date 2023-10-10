@@ -78,6 +78,16 @@ const textureMap = [
         sourceId: `door_item`,
         path: 'rp/textures/items',
         baseName: '_door.png'
+    },
+    {
+        sourceId: `pack_icon`,
+        path: 'bp',
+        baseName: 'pack_icon.png'
+    },
+    {
+        sourceId: `pack_icon`,
+        path: 'rp',
+        baseName: 'pack_icon.png'
     }
 ];
 window.textureMap = textureMap;

@@ -23,6 +23,18 @@
     scrollbar-color: var(--button-color) var(--background-color);
 }
 
+/* Root container*/
+.content-container {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.title-image {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* This will center the image */
+}
 
 :root {
     --background-color: #2C3E50;  /* Dark Blue */
@@ -78,6 +90,11 @@ body {
     font-family: Arial, sans-serif;
     padding: 20px;
 }
+body, nav ul {
+    margin: 0;
+    padding: 0;
+}
+
 
 input[type="file"],
 textarea {
@@ -121,7 +138,38 @@ button:hover {
     margin-bottom: 20px;
 }
 
-.home-button:hover {
-    background-color: var(--button-hover-color);
-    box-shadow: var(--button-hover-shadow);
+
+table {
+    width: 20%;
+    border-collapse: collapse;
+    margin: 20px auto;  /* This will center the table horizontally */
+}
+
+table, th, td {
+    border: 1px solid var(--nav-background-color);
+}
+
+th, td {
+    padding: 10px;
+    text-align: center;  /* This will center the content of the table cells */
+    background-color: var(--input-field-color);
+}
+
+/* Adjust the width of the input fields inside the table */
+table input {
+    width: 60%;  /* Adjust this value as needed */
+    display: block;
+    margin: 0 auto;  /* This will center the input fields inside the table cells */
+}
+
+input[type="file"] {
+    background-color: var(--input-field-color);
+    color: var(--input-text-color);
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    outline: none;
+    width: auto; /* Adjust this to prevent full width */
+    display: inline-block; /* Make it inline so it doesn't take the full width */
+    margin-right: 10px; /* Add some margin if needed */
 }

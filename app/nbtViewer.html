@@ -17,10 +17,11 @@
         </ul>
     </nav>
     <div class="center-container">
-        <input type="file" id="nbtFileInput">
-        <button onclick="getNBT()">Display NBT</button>
+        <div class="image-container">
+            <img src="assets/nbte_title.png" alt="title" style="max-width: 100%; height: auto;">
+        </div>
+        <input type="file" id="nbtFileInput" onchange="getNBT()">
         <button onclick="downloadMCStructure()">Download as .mcstructure</button>
-        <button onclick="downloadTXT()">Download as .txt</button>
         
         <table id="nbtDataTable">
 
