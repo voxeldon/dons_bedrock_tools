@@ -157,3 +157,23 @@ input[type="file"]::-webkit-file-upload-button:hover {
     background-color: var(--transparent-black);
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
+
+#advancedSettingsBtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+#advancedSettingsContainer {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 10px;
+}
+
+.biome-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}

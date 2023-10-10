@@ -40,9 +40,88 @@
                 
             </div>
             <div class="row">
+                <button id="advancedSettingsBtn">Advanced Settings</button>
+            </div>
+            <div class="row">
                 <button class="generate-btn" onclick="generateTemplate()">Generate</button>
             </div>
         </div> 
+            <!-- Advanced Settings Container (Initially Hidden) -->
+            <div id="advancedSettingsContainer" class="input-container" style="display: none;">
+                <label>Biome:</label>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="allBiome" name="biome" value="all">
+                    <label for="allBiome">All</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="beachBiome" name="biome" value="beach">
+                    <label for="beachBiome">Beach</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="desertBiome" name="biome" value="desert">
+                    <label for="desertBiome">Desert</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="extremeHillsBiome" name="biome" value="extreme_hills">
+                    <label for="extremeHillsBiome">Extreme Hills</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="forestBiome" name="biome" value="forest">
+                    <label for="forestBiome">Forest</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="iceBiome" name="biome" value="ice">
+                    <label for="iceBiome">Ice</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="jungleBiome" name="biome" value="jungle">
+                    <label for="jungleBiome">Jungle</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="mesaBiome" name="biome" value="mesa">
+                    <label for="mesaBiome">Mesa</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="mushroomIslandBiome" name="biome" value="mushroom_island">
+                    <label for="mushroomIslandBiome">Mushroom Island</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="oceanBiome" name="biome" value="ocean">
+                    <label for="oceanBiome">Ocean</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="plainBiome" name="biome" value="plain">
+                    <label for="plainBiome">Plain</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="riverBiome" name="biome" value="river">
+                    <label for="riverBiome">River</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="savannaBiome" name="biome" value="savanna">
+                    <label for="savannaBiome">Savanna</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="stoneBeachBiome" name="biome" value="stone_beach">
+                    <label for="stoneBeachBiome">Stone Beach</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="swampBiome" name="biome" value="swamp">
+                    <label for="swampBiome">Swamp</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="taigaBiome" name="biome" value="taiga">
+                    <label for="taigaBiome">Taiga</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="theEndBiome" name="biome" value="the_end">
+                    <label for="theEndBiome">The End</label>
+                </div>
+                <div class="biome-checkbox">
+                    <input type="checkbox" id="theNetherBiome" name="biome" value="the_nether">
+                    <label for="theNetherBiome">The Nether</label>
+                </div>
+            </div>            
         <div id="logSection">
             <ul id="logs"></ul>
         </div>

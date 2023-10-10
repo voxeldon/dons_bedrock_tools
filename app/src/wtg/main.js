@@ -9,6 +9,16 @@ document.getElementById('texturePack').addEventListener('change', async function
     }
 });
 
+document.getElementById('advancedSettingsBtn').addEventListener('click', function() {
+    const advancedSettingsContainer = document.getElementById('advancedSettingsContainer');
+    if (advancedSettingsContainer.style.display === "none") {
+        advancedSettingsContainer.style.display = "block";
+    } else {
+        advancedSettingsContainer.style.display = "none";
+    }
+});
+
+
 const blockPrefix = [
     'blocks.json','item_texture.json','terrain_texture.json','custom_boat.animation_controller.json',
     'custom_boat.animation.json', `manifest.json`, `en_US.lang`, `languages.json`, `pack_icon.png`
